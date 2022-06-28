@@ -47,8 +47,11 @@ const startServer = () => {
         app.use('/books', bookRoutes);
 
         /** Check whether everything is working or not!*/
+        app.get('/', (req: Request, res: Response) => {
+            return res.status(200).send("Welcome to Book Keeper example.")
+        })
         app.get('/ping', (req: Request, res: Response, next: NextFunction) => {
-            res.status(200).json({ message: "Ping is successfully" });
+            return res.status(200).json({ message: "Ping is successfully" });
         })
 
         /** Error Handling */
