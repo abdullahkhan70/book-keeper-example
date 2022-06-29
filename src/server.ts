@@ -41,27 +41,27 @@ const startServer = () => {
             return res.status(200).json();
         }
         next();
-
-        /** Routes */
-        app.use('/authors', authorRoutes);
-        app.use('/books', bookRoutes);
-
-        /** Check whether everything is working or not!*/
-        app.get('/', (req: Request, res: Response) => {
-            return res.status(200).send("Welcome to Book Keeper example.")
-        })
-        app.get('/ping', (req: Request, res: Response, next: NextFunction) => {
-            return res.status(200).json({ message: "Ping is successfully" });
-        })
-
-        /** Error Handling */
-        app.use((req: Request, res: Response, next: NextFunction) => {
-            const error = new Error('The route is not found!');
-            Logging.error(error.message);
-            res.status(404).json({ message: error.message });
-            next();
-        });
-
     });
+    /** Routes */
+    app.use('/authors', authorRoutes);
+    app.use('/books', bookRoutes);
+
+    /** Check whether everything is working or not!*/
+    app.get('/', (req: Request, res: Response) => {
+        return res.status(200).send("Welcome to Book Keeper example.")
+    })
+    app.get('/ping', (req: Request, res: Response, next: NextFunction) => {
+        return res.status(200).json({ message: "Ping is successfully" });
+    })
+
+    /** Error Handling */
+    app.use((req: Request, res: Response, next: NextFunction) => {
+        const error = new Error('The route is not found!');
+        Logging.error(error.message);
+        res.status(404).json({ message: error.message });
+        next();
+    });
+
+
     http.createServer(app).listen(config.server.port, () => Logging.info(`The server is running on Port ${config.server.port}`))
 }
